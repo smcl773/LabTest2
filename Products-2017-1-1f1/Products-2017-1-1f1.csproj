@@ -93,6 +93,7 @@
     <Compile Include="Assets\CubeScript.cs" />
     <Compile Include="Assets\oldSketch.cs" />
     <Compile Include="Assets\Sketch.cs" />
+    <Compile Include="Assets\SphereScript.cs" />
     <Compile Include="Assets\Town.cs" />
     <Compile Include="Assets\WebRequest.cs" />
   </ItemGroup>

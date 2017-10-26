@@ -2,7 +2,8 @@ using UnityEngine;
 using Pathfinding.Serialization.JsonFx; //make sure you include this using
 
 public class Sketch : MonoBehaviour {
-    public GameObject myPrefab;
+    public GameObject cube;//declares a gameobject which can be accessed from anywhere. this is a cube set in unity
+    public GameObject sphere;//declares a gameobject which can be accessed from anywhere. this is a sphere set in unity
     public string _WebsiteURL = "http://ChronoSpatial.azurewebsites.net/tables/Town?zumo-api-version=2.0.0";
 
     void Start () {
@@ -25,7 +26,7 @@ public class Sketch : MonoBehaviour {
 
         int i = 0;
         int totalCubes = towns.Length;
-        float totalDistance = 2.9f;
+        //float totalDistance = 2.9f;
         //----------------------
 
         //We can now loop through the array of objects and access each object individually
@@ -42,12 +43,24 @@ public class Sketch : MonoBehaviour {
             float y = town.Altitude;
             float z = town.Longitude;
 
-            var newCube = (GameObject)Instantiate(myPrefab, new Vector3(x, y, z), Quaternion.identity);
-
-            newCube.GetComponent<CubeScript>().SetSize(.45f * (1.0f - perc));
-            newCube.GetComponent<CubeScript>().rotateSpeed = .2f + perc * 4.0f;
-            newCube.transform.Find("New Text").GetComponent<TextMesh>().text = town.TownName;//"Hullo Again";
-            i++;
+            if (town.Symbol == "Sphere")
+            {
+                var newCube = (GameObject)Instantiate(sphere, new Vector3(x, y, z), Quaternion.identity);
+                newCube.GetComponent<SphereScript>().SetSize(town.Size);
+                newCube.GetComponent<SphereScript>().rotateSpeed = .2f + perc * 4.0f;
+                newCube.GetComponent<Renderer>().material.color = new Color32(128, 255, 128, 255);
+                newCube.transform.Find("New Text").GetComponent<TextMesh>().text = town.TownName;//"Hullo Again";
+                i++;
+            }
+            if (town.Symbol == "Cube")
+            {
+                var newCube = (GameObject)Instantiate(cube, new Vector3(x, y, z), Quaternion.identity);
+                newCube.GetComponent<CubeScript>().SetSize(town.Size);
+                newCube.GetComponent<CubeScript>().rotateSpeed = .2f + perc * 4.0f;
+                newCube.GetComponent<Renderer>().material.color = new Color32(0, 255, 0, 255);
+                newCube.transform.Find("New Text").GetComponent<TextMesh>().text = town.TownName;//"Hullo Again";
+                i++;
+            }
 
             //----------------------
         }
